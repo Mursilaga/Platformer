@@ -301,7 +301,17 @@ int main()
 
 	while (true)
 	{
-		std::string mapname = "level" + std::to_string(lvlnum) + ".tmx";
+		errno_t err;
+		std::string mapname = "..\\level" + std::to_string(lvlnum) + ".tmx";
+
+		FILE *fo;
+		err = fopen_s(&fo, mapname.c_str(), "r");
+		if (err != 0)
+		{
+			std::cout << "file " << mapname << " not found" << std::endl;
+			_sleep(5000);
+			break;
+		}
 		Level lvl;
 		lvl.LoadFromFile(mapname);
 
